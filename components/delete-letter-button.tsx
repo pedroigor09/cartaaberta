@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { createPortal } from 'react-dom'
 import { Trash2, AlertTriangle, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { deleteLetter } from '@/app/actions/letter'
@@ -43,13 +44,13 @@ export function DeleteLetterButton({ letterId, letterTitle }: DeleteLetterButton
         {isDeleting ? 'Excluindo...' : 'Excluir'}
       </Button>
 
-      {/* Modal com overlay e animação */}
-      {showModal && (
+      {/* Modal renderizado FORA do card usando Portal */}
+      {showModal && typeof document !== 'undefined' && createPortal(
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 animate-fadeIn"
+          className="fixed inset-0 z-[9999] flex items-center justify-center p-4 animate-fadeIn"
           style={{
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            backdropFilter: 'blur(4px)'
+            backgroundColor: 'rgba(0, 0, 0, 0.75)',
+            backdropFilter: 'blur(8px)'
           }}
           onClick={() => !isDeleting && setShowModal(false)}
         >
@@ -112,7 +113,8 @@ export function DeleteLetterButton({ letterId, letterTitle }: DeleteLetterButton
               </Button>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
 
       <style jsx global>{`
