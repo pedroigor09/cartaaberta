@@ -1,8 +1,10 @@
 import { auth } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import { getAllLetters } from './actions/letter'
+import { checkHasSeenOnboarding } from './actions/onboarding'
 import { Sidebar } from '@/components/sidebar'
 import { MobileMenu } from '@/components/mobile-menu'
+import { OnboardingWrapper } from '@/components/onboarding-wrapper'
 import Link from 'next/link'
 import { Eye, Calendar } from 'lucide-react'
 
@@ -14,12 +16,16 @@ export default async function Home() {
   }
   
   const letters = await getAllLetters()
+  const hasSeenOnboarding = await checkHasSeenOnboarding()
 
   return (
-    <div className="min-h-screen flex" style={{ 
-      background: 'linear-gradient(32deg, hsl(193 6 76), hsl(196 9 69) 50%)',
-      fontFamily: "'Poppins', sans-serif"
-    }}>
+    <>
+      {!hasSeenOnboarding && <OnboardingWrapper />}
+      
+      <div className="min-h-screen flex" style={{ 
+        background: 'linear-gradient(32deg, hsl(193 6 76), hsl(196 9 69) 50%)',
+        fontFamily: "'Poppins', sans-serif"
+      }}>
       <MobileMenu session={session} />
       
       <div className="hidden md:block">
@@ -107,6 +113,7 @@ export default async function Home() {
           )}
         </div>
       </main>
-    </div>
+      </div>
+    </>
   )
 }
