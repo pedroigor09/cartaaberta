@@ -56,7 +56,7 @@ export default async function HistoryPage() {
             </Card>
           ) : (
             <div className="grid gap-3 sm:gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-              {letters.map((letter) => (
+              {letters.map((letter: { id: string; shareId: string; title: string; views: number; createdAt: Date }) => (
                 <Card key={letter.id} className="bg-white/90 backdrop-blur-sm hover:shadow-lg transition-shadow">
                   <CardHeader>
                     <CardTitle className="text-xl line-clamp-2">
