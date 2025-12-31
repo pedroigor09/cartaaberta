@@ -56,7 +56,7 @@ export default async function Home() {
             </div>
           ) : (
             <div className="grid gap-3 sm:gap-4">
-              {letters.map((letter: { id: string; shareId: string; title: string; content: string; views: number; createdAt: Date; author: { name: string | null; image: string | null } }) => (
+              {letters.map((letter: { id: string; shareId: string; title: string; views: number; createdAt: Date; author: { name: string | null; image: string | null } }) => (
                 <Link 
                   key={letter.id} 
                   href={`/letter/${letter.shareId}`}
